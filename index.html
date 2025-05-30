@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Status da Chuva</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    .status {
+      font-size: 2em;
+      color: #007BFF;
+    }
+  </style>
+</head>
+<body>
+  <h1>Status da Chuva</h1>
+  <div id="chuvaStatus" class="status">Carregando...</div>
+
+  <script>
+    async function buscarStatusChuva() {
+      try {
+        const resposta = await fetch('http://localhost:3000/status');
+        const dados = await resposta.json();
+
+        document.getElementById('chuvaStatus').textContent = dados.status;
+      } catch (erro) {
+        document.getElementById('chuvaStatus').textContent = 'Erro ao buscar status.';
+        console.error('Erro:', erro);
+      }
+    }
+
+    setInterval(buscarStatusChuva, 2000); // Atualiza a cada 2s
+    buscarStatusChuva();
+  </script>
+</body>
+</html>
